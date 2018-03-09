@@ -48,6 +48,9 @@ int main(int argc, char** argv) {
   /*Driver code to test the functionality of the SymMat class */
 
   const int order = 4; // order of each of the input square Eigen::Matrix
+
+  /* Test Case -1: */
+  std::cout << "TEST CASE 1: Matrix with integer values" << std::endl << "---------------------------------------" << std::endl;
   Eigen::MatrixXi M(order,order);
   fill_matrix_symmetric<Eigen::MatrixXi, int>(M); // M is a symmetric matrix  of type Eigen::MatrixXi and having 'int' values
 
@@ -150,6 +153,210 @@ int main(int argc, char** argv) {
   }
   std::cout << resM << std::endl;
   std::cout << std::endl;
+
+  std::cout << "--------------------------------------------------------------------------------------"<< std::endl << std::endl;
+
+
+  /* Test Case -2: */
+  std::cout << "TEST CASE 2: Matrix with floating-point values" << std::endl << "----------------------------------------------" << std::endl;
+  Eigen::MatrixXd Mat(order,order);
+  fill_matrix_symmetric<Eigen::MatrixXd, double>(Mat); // Mat is a symmetric matrix  of type Eigen::MatrixXd and having 'double' values
+
+  Eigen::MatrixXd Mat1(order,order);
+  fill_matrix_symmetric<Eigen::MatrixXd, double>(Mat1); // Mat1 is a symmetric matrix  of type Eigen::MatrixXd and having 'double' values
+
+  Eigen::MatrixXd Mat2(order,order);
+  fill_matrix_random<Eigen::MatrixXd, double>(Mat2); // Mat2 is not a symmetric matrix. 
+                                                     // It is of type Eigen::MatrixXd and having 'double' values
+
+  /*Displaying the Eigen::Matrix */
+  std::cout << "Mat: " << std::endl << std::endl << Mat << std::endl;
+  std::cout << std::endl;
+  std::cout << "Mat1: " << std::endl << std::endl << Mat1 << std::endl;
+  std::cout << std::endl;
+  std::cout << "Mat2: "  << std::endl << std::endl << Mat2 << std::endl;
+  std::cout << std::endl;
+
+  // creating SymMat, S2, from Eigen::Matrix, Mat.
+  SymMat<Eigen::MatrixXd,double> S2(Mat);
+  std::cout << "S2: "  << std::endl << std::endl;
+  S2.print_symMat(); // displaying the SymMat created
+  std::cout << std::endl;
+
+  // creating SymMat, S3, from Eigen::Matrix, Mat1.
+  SymMat<Eigen::MatrixXd,double> S3(Mat1); 
+  std::cout << "S3: "  << std::endl << std::endl;
+  S3.print_symMat(); // displaying the SymMat created
+  std::cout << std::endl;
+
+  SymMat<Eigen::MatrixXd,double> res1(order); // creating the result SymMat, res1.
+
+  std::cout << "S2 + S3: "  << std::endl << std::endl;
+  try{
+    res1 = S2+S3; // testing the operation SymMat + SymMat. The operation is commutative.
+
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  res1.print_symMat();
+  std::cout << std::endl;
+
+  std::cout << "S2 - S3: "  << std::endl << std::endl;
+  try {
+    res1 = S2-S3;  // testing the operation SymMat - SymMat
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  res1.print_symMat(); // displaying the result
+  std::cout << std::endl;
+
+  Eigen::MatrixXd resM1(order,order);  // creating the result Eigen::Matrix, resM1.
+  std::cout << "S2 + Mat2: "  << std::endl << std::endl;
+  try {
+    resM1 = S2 + Mat2;  // testing the operation SymMat + Eigen::Matrix. 
+                    // The operation is not commutative, i.e., resM1 = Mat2 + S2 is not allowed
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  std::cout << resM1 << std::endl; // displaying the result
+  std::cout << std::endl;
+
+  std::cout << "S2 - Mat2: "  << std::endl << std::endl;
+  try {
+    resM1 = S2 - Mat2;  // testing the operation SymMat - Eigen::Matrix.
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  std::cout << resM1 << std::endl; // displaying the result
+  std::cout << std::endl;
+
+  std::cout << "S2 * S3: "  << std::endl << std::endl;
+  try {
+    resM1 = S2 * S3;  // testing the operation SymMat * SymMat. The result need not be a symmetric matrix.
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  std::cout << resM1 << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "S2 * Mat2: "  << std::endl << std::endl;
+  try {
+    resM1 = S2 * Mat2;
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  std::cout << resM1 << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "--------------------------------------------------------------------------------------"<< std::endl << std::endl;
+
+
+
+  /* Test Case - 3: */
+  std::cout << "TEST CASE 3: Matrix with floating-point values declared on the stack" << std::endl;
+  std::cout << "---------------------------------------------------------------------" << std::endl;
+  Eigen::Matrix2d Mat3;
+  fill_matrix_symmetric<Eigen::Matrix2d, double>(Mat3); // Mat3 is a symmetric matrix  of type Eigen::Matrix2d and having 'double' values
+
+  Eigen::Matrix2d Mat4;
+  fill_matrix_symmetric<Eigen::Matrix2d, double>(Mat4); // Mat4 is a symmetric matrix  of type Eigen::Matrix2d and having 'double' values
+
+  Eigen::Matrix2d Mat5;
+  fill_matrix_random<Eigen::Matrix2d, double>(Mat5); // Mat5 is not a symmetric matrix. 
+                                                     // It is of type Eigen::Matrix2d and having 'double' values
+
+  /*Displaying the Eigen::Matrix */
+  std::cout << "Mat3: " << std::endl << std::endl << Mat3 << std::endl;
+  std::cout << std::endl;
+  std::cout << "Mat4: " << std::endl << std::endl << Mat4 << std::endl;
+  std::cout << std::endl;
+  std::cout << "Mat5: "  << std::endl << std::endl << Mat5 << std::endl;
+  std::cout << std::endl;
+
+  // creating SymMat, S4, from Eigen::Matrix, Mat3.
+  SymMat<Eigen::Matrix2d,double> S4(Mat3);
+  std::cout << "S4: "  << std::endl << std::endl;
+  S4.print_symMat(); // displaying the SymMat created
+  std::cout << std::endl;
+
+  // creating SymMat, S5, from Eigen::Matrix, Mat1.
+  SymMat<Eigen::Matrix2d,double> S5(Mat4); 
+  std::cout << "S5: "  << std::endl << std::endl;
+  S5.print_symMat(); // displaying the SymMat created
+  std::cout << std::endl;
+
+  SymMat<Eigen::Matrix2d,double> res2(2); // creating the result SymMat, res2.
+
+  std::cout << "S4 + S5: "  << std::endl << std::endl;
+  try{
+    res2 = S4+S5; // testing the operation SymMat + SymMat. The operation is commutative.
+
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  res2.print_symMat();
+  std::cout << std::endl;
+
+  std::cout << "S4 - S5: "  << std::endl << std::endl;
+  try {
+    res2 = S4-S5;  // testing the operation SymMat - SymMat
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  res2.print_symMat(); // displaying the result
+  std::cout << std::endl;
+
+  Eigen::Matrix2d resM2;  // creating the result Eigen::Matrix, resM2.
+  std::cout << "S4 + Mat5: "  << std::endl << std::endl;
+  try {
+    resM2 = S4 + Mat5;  // testing the operation SymMat + Eigen::Matrix. 
+                    // The operation is not commutative, i.e., resM2 = Mat5 + S4 is not allowed
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  std::cout << resM2 << std::endl; // displaying the result
+  std::cout << std::endl;
+
+  std::cout << "S4 - Mat5: "  << std::endl << std::endl;
+  try {
+    resM2 = S4 - Mat5;  // testing the operation SymMat - Eigen::Matrix.
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  std::cout << resM2 << std::endl; // displaying the result
+  std::cout << std::endl;
+
+  std::cout << "S4 * S5: "  << std::endl << std::endl;
+  try {
+    resM2 = S4 * S5;  // testing the operation SymMat * SymMat. The result need not be a symmetric matrix.
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  std::cout << resM2 << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "S4 * Mat5: "  << std::endl << std::endl;
+  try {
+    resM2 = S4 * Mat5;
+  }
+  catch(const char* e) {
+    std::cout << e << std::endl;
+  }
+  std::cout << resM2 << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "--------------------------------------------------------------------------------------"<< std::endl << std::endl;
 
   return 0;
 }

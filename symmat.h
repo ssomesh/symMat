@@ -27,9 +27,9 @@ class SymMat {
     // Constructor for populating 'symmetric' with all zeros
     SymMat(int order) {  // order is the dimension of the square Eigen::Matrix it represents
       dim = order;
-      for(int i=0; i<order; ++i) {
+      for(int i=0; i<dim; ++i) {
         std::vector<T> vecRow;
-        for(int j=i; j<order; ++j) {
+        for(int j=i; j<dim; ++j) {
           vecRow.push_back((T)0);
         }
         symmetric.push_back(vecRow);
