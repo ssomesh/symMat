@@ -16,15 +16,16 @@
 
 /* class for a symmetric matrix */
 
-template <typename Derived, typename T> // Derived is the type of Eigen::Matrix and T is the datatype of the values in the input matrix.
+template <typename Derived, typename T> // Derived is the type of Eigen::Matrix and 
+                                        // 'T' is the datatype of the values in the input matrix.
 class SymMat {
   private:
-    std::vector<std::vector<T> > symmetric; // for storing the  upper triangular part of the symmetric matrix
+    std::vector<std::vector<T> > symmetric; // for storing the  upper triangular part of a Symmetric Eigen::Matrix
     int dim; // for storing the dimension of the input matrix
   public:
 
     // Constructor for populating 'symmetric' with all zeros
-    SymMat(int order) {  // order is the dimension of the square matrix it represents
+    SymMat(int order) {  // order is the dimension of the square Eigen::Matrix it represents
       dim = order;
       for(int i=0; i<order; ++i) {
         std::vector<T> vecRow;
@@ -37,7 +38,7 @@ class SymMat {
 
     // Constructor for storing the upper triangular part of the Eigen::Matrix in 'symmetric'
     SymMat(Derived& M) {
-      assert(M.rows() == M.cols()); // make sure that the matrix, M is a square matrix -- a sanity check.
+      assert(M.rows() == M.cols()); // make sure that the Eigen::Matrix, M, is a square matrix -- a sanity check.
       dim = M.rows();
       for(int i=0; i<dim; ++i) {
         std::vector<T> vecRow;
@@ -51,21 +52,22 @@ class SymMat {
     // getter -- return the element of the symmetric matrix at the index (r,c)  
     T& operator()(int r, int c) throw (const char *) { // overloading the operator () 
 
-      if (r < 0 || r >= dim || c < 0 || c >= dim) throw "Invalid access";
+      if (r < 0 || r >= dim || c < 0 || c >= dim) throw "Invalid access"; // throw an exception upon encountering an out of bounds access
       else {
-        if(r > c) { // (r > c) is an element in the lower triangular part of the matrix, hence swap 'r' & 'c' to get the corresponding element from the upper triangular part of the matrix. 
+        if(r > c) { // (r > c) is an element in the lower triangular part of the matrix, 
+                    // hence swap 'r' & 'c' to get the corresponding element from the upper triangular part of the matrix. 
           r = r ^ c;
           c = r ^ c;
           r = r ^ c;
         }
-        return symmetric[r][c-r]; // the row id has to be subtracted from the column id to get the correct index since that is the offset
+        return symmetric[r][c-r]; // the row id is subtracted from the column id to get the correct index since that is the offset
 
       }
     }
 
     // overloading the + operator for (SymMat + SymMat)
     SymMat operator + (SymMat& S2) throw (const char *) { 
-      if(this->dim != S2.dim) throw "Matrix dimensions do not match";
+      if(this->dim != S2.dim) throw "Matrix dimensions do not match"; // throw an exception if matrix dimensions do not match
       else {
         SymMat S1(dim); // creating an object of SymMat for storing the result. 
         for(int i=0; i<dim; i++) {
@@ -78,7 +80,7 @@ class SymMat {
 
     // overloading the - operator for (SymMat - SymMat)
     SymMat operator - (SymMat& S2) throw (const char *) {  
-      if(dim != S2.dim) throw "Matrix dimensions do not match";
+      if(dim != S2.dim) throw "Matrix dimensions do not match"; // throw an exception if matrix dimensions do not match
       else {
         SymMat S1(dim); // creating an object for storing the result
         for(int i=0; i<dim; i++) {
@@ -92,7 +94,7 @@ class SymMat {
 
     // overloading the + operator for (SymMat + Eigen::Matrix)
     Derived operator + (Derived& M) throw (const char*) { 
-      assert(M.rows() == M.cols());  // checking if M is a square matrix -- a sanity check
+      assert(M.rows() == M.cols());  // checking if Eigen::Matrix, M, is a square matrix -- a sanity check
       if(M.rows() != dim) throw "Matrix dimensions do not match"; // throw an exception if matrix dimensions do not match
       else {
         Derived res(dim,dim); // creating an object of Eigen::Matrix for storing the result
@@ -105,7 +107,7 @@ class SymMat {
 
     // overloading the - operator for (SymMat - Eigen::Matrix)
     Derived operator - (Derived& M) throw (const char*) {  
-      assert(M.rows() == M.cols()); // checking if M is a square matrix -- a sanity check
+      assert(M.rows() == M.cols()); // checking if Eigen::Matrix, M, is a square matrix -- a sanity check
       if(M.rows() != dim) throw "Matrix dimensions do not match"; // throw an exception if matrix dimensions do not match
       else {
         Derived res(dim,dim);// creating an object of Eigen::Matrix for storing the result
@@ -118,7 +120,7 @@ class SymMat {
 
     // overloading the * operator for (SymMat * SymMat)
     Derived operator * (SymMat& S2) {  // the result may not be a symmetric matrix
-      if(this->dim != S2.dim) throw "Matrix dimensions do not match";
+      if(this->dim != S2.dim) throw "Matrix dimensions do not match"; // throw an exception if matrix dimensions do not match
       else {
         Derived res(dim,dim);// creating an object of Eigen::Matrix for storing the result
         for(int i=0; i<dim; i++) {
@@ -134,7 +136,7 @@ class SymMat {
 
     // overloading the * operator for (SymMat * Eigen::Matrix)
     Derived operator * (Derived& M) { // the result may not be a symmetric matrix
-      assert(M.rows() == M.cols()); 
+      assert(M.rows() == M.cols()); // checking if Eigen::Matrix, M, is a square matrix -- a sanity check
       if(M.rows() != dim) throw "Matrix dimensions do not match"; // throw an exception if matrix dimensions do not match
       else {
         Derived res(dim,dim);// creating an object of Eigen::Matrix for storing the result

@@ -46,6 +46,7 @@ void fill_matrix_random(Derived& M){  // a helper function to populate the matri
 int main(int argc, char** argv) {
 
   /*Driver code to test the functionality of the SymMat class */
+
   const int order = 4; // order of each of the input square Eigen::Matrix
   Eigen::MatrixXi M(order,order);
   fill_matrix_symmetric<Eigen::MatrixXi, int>(M); // M is a symmetric matrix  of type Eigen::MatrixXi and having 'int' values
@@ -54,7 +55,8 @@ int main(int argc, char** argv) {
   fill_matrix_symmetric<Eigen::MatrixXi, int>(M1); // M1 is a symmetric matrix  of type Eigen::MatrixXi and having 'int' values
 
   Eigen::MatrixXi M2(order,order);
-  fill_matrix_random<Eigen::MatrixXi, int>(M2); // M2 is not a symmetric matrix. It is of type Eigen::MatrixXi and having 'int' values
+  fill_matrix_random<Eigen::MatrixXi, int>(M2); // M2 is not a symmetric matrix. 
+                                                // It is of type Eigen::MatrixXi and having 'int' values
 
   /*Displaying the Eigen::Matrix */
   std::cout << "M: " << std::endl << std::endl << M << std::endl;
@@ -110,7 +112,8 @@ int main(int argc, char** argv) {
   Eigen::MatrixXi resM(order,order);  // creating the result Eigen::Matrix, resM.
   std::cout << "S + M2: "  << std::endl << std::endl;
   try {
-    resM = S + M2;  // testing the operation SymMat + Eigen::Matrix. The operation is not commutative, i.e., resM = M2 + S is not allowed
+    resM = S + M2;  // testing the operation SymMat + Eigen::Matrix. 
+                    // The operation is not commutative, i.e., resM = M2 + S is not allowed
   }
   catch(const char* e) {
     std::cout << e << std::endl;
