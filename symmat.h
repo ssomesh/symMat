@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
-#include <eigen3/Eigen/Dense> // eigen3 is installed in usr/local/include
+#include <eigen3/Eigen/Dense> // eigen3 is installed in /usr/local/include
 #include <string>
 
 /*
