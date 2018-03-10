@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
   const int order = 4; // order of each of the input square Eigen::Matrix
 
   /* Test Case -1: */
-  std::cout << "TEST CASE 1: Matrix with integer values" << std::endl << "---------------------------------------" << std::endl;
+  std::cout << "TEST CASE 1: Eigen::Matrix with integer values" << std::endl << "---------------------------------------" << std::endl;
   Eigen::MatrixXi M(order,order);
   fill_matrix_symmetric<Eigen::MatrixXi, int>(M); // M is a symmetric matrix  of type Eigen::MatrixXi and having 'int' values
 
@@ -158,7 +158,7 @@ int main(int argc, char** argv) {
 
 
   /* Test Case -2: */
-  std::cout << "TEST CASE 2: Matrix with floating-point values" << std::endl << "----------------------------------------------" << std::endl;
+  std::cout << "TEST CASE 2: Eigen::Matrix with floating-point values" << std::endl << "----------------------------------------------" << std::endl;
   Eigen::MatrixXd Mat(order,order);
   fill_matrix_symmetric<Eigen::MatrixXd, double>(Mat); // Mat is a symmetric matrix  of type Eigen::MatrixXd and having 'double' values
 
@@ -259,7 +259,7 @@ int main(int argc, char** argv) {
 
 
   /* Test Case - 3: */
-  std::cout << "TEST CASE 3: Matrix with floating-point values declared on the stack" << std::endl;
+  std::cout << "TEST CASE 3: Eigen::Matrix with floating-point values declared on the stack" << std::endl;
   std::cout << "---------------------------------------------------------------------" << std::endl;
   Eigen::Matrix2d Mat3;
   fill_matrix_symmetric<Eigen::Matrix2d, double>(Mat3); // Mat3 is a symmetric matrix  of type Eigen::Matrix2d and having 'double' values
