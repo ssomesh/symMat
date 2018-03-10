@@ -50,8 +50,7 @@ class SymMat {
     }
 
     // getter -- return the element of the symmetric matrix at the index (r,c)  
-    T& operator()(int r, int c) throw (const char *) { // overloading the operator () 
-
+    T& operator()(int r, int c) throw (const char *) { 
       if (r < 0 || r >= dim || c < 0 || c >= dim) throw "Invalid access"; // throw an exception upon encountering an out of bounds access
       else {
         if(r > c) { // (r > c) is an element in the lower triangular part of the matrix, 
